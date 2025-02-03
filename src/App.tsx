@@ -7,7 +7,6 @@ import Event from './pages/Event'
 import Login from './pages/Login'
 import PurchaseTickets from './pages/PurchaseTickets'
 import Register from './pages/Register'
-import SelectTickets from './pages/SelectTickets'
 
 function App() {
   return (
@@ -16,8 +15,7 @@ function App() {
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
 
-      <Route path="event" element={<Event />} />
-      <Route path="select-tickets" element={<SelectTickets />} />
+      <Route path="event/:id" element={<Event />} />
       <Route path="purchase-tickets" element={<PurchaseTickets />} />
 
       <Route path="/console" element={<Console />} />
