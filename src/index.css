@@ -1,0 +1,19 @@
+:root {
+  --primary-color: #EBB470;
+  --secondary-color: #71E9EB;
+  --tertiary-color: #719CEB;
+
+  --white-color: #FFFFFF;
+  --black-color: #1E1E1E;
+}
+
+
+* {
+  font-family: 'Public Sans', sans-serif;
+  line-height: 1.6;
+}
+
+body {
+  background-color: var(--white-color);
+  color: var(--black-color);
+}
