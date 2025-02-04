@@ -2,6 +2,7 @@ import Navbar from '../components/Navbar'
 import './Home.css'
 import EventCard from '../components/EventCard'
 import dummyEvents from '../dummy-data/Event'
+import { Link } from 'react-router-dom'
 
 function Home() {
 
@@ -9,10 +10,14 @@ function Home() {
     <>
       <Navbar />
 
-      <div className="console-container">
+      <div className="home-container">
         <div className="event-list">
           {dummyEvents.map((event, idx) => (
-            <EventCard key={event.title + idx} event={event}/>
+            <Link to={`event/${event.id}`} 
+                  key={event.title + idx}
+            >
+              <EventCard event={event}/>
+            </Link>
           ))}
         </div>
       </div>

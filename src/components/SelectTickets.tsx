@@ -21,25 +21,25 @@ function SelectTickets({ eventId }: { eventId: number }) {
   }
 
   return (
-    <div className='select-tickets-container'>
-      <form onSubmit={handleSubmit}>
+    <>
+      <form className='select-tickets-form' onSubmit={handleSubmit}>
         {tickets.map(ticket => (
           <div key={ticket.id} className='ticket-option'>
-            <label>
+            <label htmlFor={`ticket-${ticket.id}`}>
               {ticket.details} - ${ticket.price}
-              <input
-                key={ticket.id}
-                type="number"
-                min="0"
-                value={selectedTickets[ticket.id] || 0}
-                onChange={(e) => handleChange(ticket.id, parseInt(e.target.value))}
-              />
             </label>
+            <input
+              id={`ticket-${ticket.id}`}
+              type="number"
+              min="0"
+              value={selectedTickets[ticket.id] || 0}
+              onChange={(e) => handleChange(ticket.id, parseInt(e.target.value))}
+            />
           </div>
         ))}
-        <button type="submit">Purchase Tickets</button>
+        <button className="purchase-tickets-button" type="submit">Purchase Tickets</button>
       </form>
-    </div>
+    </>
   )
 }
 

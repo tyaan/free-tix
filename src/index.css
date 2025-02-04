@@ -1,19 +1,32 @@
 :root {
   --primary-color: #EBB470;
-  --secondary-color: #71E9EB;
+  --primary-color-hover: #E8AA5E;
+  --primary-color-active: #E6A14C;
+
+
+  --secondary-color: #8FE2E4;
   --tertiary-color: #719CEB;
 
   --white-color: #FFFFFF;
   --black-color: #1E1E1E;
+
+  --shadow-color: rgb(190, 190, 190);
+  --shadow-color-darker:  rgb(137, 137, 137);
+
+  padding: 0;
+  margin: 0;
 }
 
 
 * {
   font-family: 'Public Sans', sans-serif;
+  color: var(--black-color);
   line-height: 1.6;
 }
 
 body {
   background-color: var(--white-color);
   color: var(--black-color);
+  margin: 0;
+  padding: 0;
 }

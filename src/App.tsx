@@ -7,19 +7,22 @@ import Event from './pages/Event'
 import Login from './pages/Login'
 import PurchaseTickets from './pages/PurchaseTickets'
 import Register from './pages/Register'
+import Profile from './pages/Profile'
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-      <Route path="event/:id" element={<Event />} />
-      <Route path="purchase-tickets" element={<PurchaseTickets />} />
+      <Route path="/event/:id" element={<Event />} />
+      <Route path="/purchase-tickets" element={<PurchaseTickets />} />
 
       <Route path="/console" element={<Console />} />
-      <Route path="create-event" element={<CreateEvent />} />
+      <Route path="/create-event" element={<CreateEvent />} />
+
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   )
 }

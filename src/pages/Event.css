@@ -1,0 +1,32 @@
+.event-container {
+  margin: 10px 13%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-image {
+  width: 100%;
+  height: 300px;
+}
+
+.event-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.event-info {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.select-tickets-container {
+  flex: 1;
+  margin: 20px;
+  padding: 20px;
+  background: var(--white-color);
+  border-radius: 5px;
+  outline: 1px solid var(--shadow-color);
+} 
+
