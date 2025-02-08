@@ -1,0 +1,14 @@
+.create-event-container {
+  margin: 50px 13%;
+}
+
+.create-event-container form {
+  display: flex;  
+  flex-direction: column;
+  align-items: center;
+}
+
+.create-event-container form input, .create-event-container form textarea, .create-event-container form button {
+  width: 100%;
+  margin: 20px;
+}
