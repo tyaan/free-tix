@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import Ticket from '../models/Ticket'
-import dummyTickets from '../dummy-data/Ticket'
 import './SelectTickets.css'
 
 function SelectTickets({ eventId }: { eventId: number }) {
-  const tickets: Ticket[] = dummyTickets.filter((ticket) => ticket.eventId === eventId)
+  // const tickets: Ticket[] = dummyTickets.filter((ticket) => ticket.eventId === eventId)
   const [selectedTickets, setSelectedTickets] = useState<{ [key: number]: number }>({})
 
   const handleChange = (ticketId: number, quantity: number) => {

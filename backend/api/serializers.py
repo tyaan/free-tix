@@ -13,10 +13,19 @@ class UserSerializer(serializers.ModelSerializer):
         return user
         
 class EventSerializer(serializers.ModelSerializer):
+    startTime = serializers.DateTimeField(source='start_time') 
+    endTime = serializers.DateTimeField(source='end_time')
     class Meta:
         model = Event
-        fields = "__all__"
+        fields = [
+            'id', 'author', 'title', 'overview', 'description', 'imgURL', 
+            'location', 'startTime', 'endTime'
+        ]
         extra_kwargs = {"author": {"read_only": True}}
+
+    def validate(self, data):
+        print("Serializer received data:", data) 
+        return data
 
 class TicketSerializer(serializers.ModelSerializer):
     class Meta:

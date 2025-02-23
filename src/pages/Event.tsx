@@ -1,21 +1,40 @@
 import { useParams } from 'react-router-dom'
 import Event from '../models/Event'
-import dummyEvents from '../dummy-data/Event'
 import './Event.css'
 import SelectTickets from '../components/SelectTickets'
 import Navbar from '../components/Navbar'
+import { useEffect, useState } from 'react'
+import api from "../api"
 
 function EventPage() {
   const { id } = useParams()
 
+  const [event, setEvent] = useState<Event>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await api.get(`/api/events/public/${id}/`)
+        console.log(response)
+        setEvent(response.data)
+      } catch (err) {
+        console.error("Error fetching event:", err);
+        setError("Failed to load event. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, [id]);
+
   if(id == undefined){ return <div>Invalid event id</div> }
   if(isNaN(parseInt(id))){ return <div>Invalid event id</div> }
 
-  const event: Event | undefined = dummyEvents.find((event) => event.id == +id)
-
-  if (!event) {
-    return <div>Event not found</div>
-  }
+  if (loading) return <p>Loading events...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <>
@@ -34,9 +53,9 @@ function EventPage() {
             <p className="event-time">End Time: {event.endTime.toString()}</p>
           </div>
 
-          <div className='select-tickets-container'>
+          {/* <div className='select-tickets-container'>
             <SelectTickets eventId={event.id} />
-          </div>
+          </div> */}
           
         </div>
       </div>

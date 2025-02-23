@@ -10,43 +10,58 @@ import Register from './pages/Register'
 import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoutes'
 import NotFound from './pages/NotFound'
+import { AuthProvider } from './context/AuthContext'
+import MyEvents from './pages/MyEvents'
 
 function Logout() {
   localStorage.clear();
+  console.log(localStorage.getItem('ACCESS_TOKEN'));
   return <Navigate to="/login" />
 }
 
-function RegisterAndLogout() {
+function LogoutAndLogin() {
+  localStorage.clear();
+  return <Login />
+}
+
+function LogoutAndRegister() {
   localStorage.clear();
   return <Register />
 }
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/logout" element={<Logout />} />
-      <Route path="/register" element={<RegisterAndLogout />} />
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LogoutAndLogin />} />
+        <Route path="/logout" element={<Logout />} />
+        <Route path="/register" element={<LogoutAndRegister />} />
 
-      <Route path="/event/:id" element={<Event />} />
-      <Route path="/purchase-tickets" element={<PurchaseTickets />} />
+        <Route path="/event/:id" element={<Event />} />
+        <Route path="/purchase-tickets" element={<PurchaseTickets />} />
 
-      <Route path="/console" element={<Console />} />
-      <Route path="/create-event" element={
-        <ProtectedRoute >
-          <CreateEvent />
-        </ProtectedRoute>
-        } />
+        <Route path="/console" element={<Console />} />
+        <Route path="/my-events" element={
+          <ProtectedRoute >
+            <MyEvents />
+          </ProtectedRoute>
+          } />
+        <Route path="/create-event" element={
+          <ProtectedRoute >
+            <CreateEvent />
+          </ProtectedRoute>
+          } />
 
-      <Route path="/profile" element={
-        <ProtectedRoute >
-          <Profile />
-        </ProtectedRoute>
-        } />
+        <Route path="/profile" element={
+          <ProtectedRoute >
+            <Profile />
+          </ProtectedRoute>
+          } />
 
-      <Route path="*" element={<NotFound  />} />
-    </Routes>
+        <Route path="*" element={<NotFound  />} />
+      </Routes>
+    </AuthProvider>
   )
 }
 

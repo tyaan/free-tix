@@ -21,11 +21,11 @@ function Login() {
       const res = await api.post('/api/token/', {username, password});
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-      navigate('/');
     } catch(error) {
       alert(error);
     } finally {
       setLoading(false);
+      navigate('/');
     }
   }
 
@@ -44,6 +44,7 @@ function Login() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
+          disabled={loading} 
         />
         <input
           className="login-input"
@@ -51,9 +52,10 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          disabled={loading}
         />
-        <button type="submit" className='login-button'>
-          Login
+        <button type="submit" className='login-button' disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
         </button>
         <p className="signup-text">Don't have an account? <Link to='/register'>Sign up here</Link></p>
       </form>

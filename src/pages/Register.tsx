@@ -43,6 +43,7 @@ function Register() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Choose a username"
+          disabled={loading} 
         />
         <input
           className="login-input"
@@ -50,6 +51,7 @@ function Register() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
+          disabled={loading} 
         />
         <input
           className="login-input"
@@ -57,9 +59,10 @@ function Register() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Choose a password"
+          disabled={loading} // Disable input while loading
         />
-        <button type="submit" className='login-button'>
-          Sign up
+        <button type="submit" className='login-button' disabled={loading}>
+          {loading ? 'Signing up...' : 'Sign up'}
         </button>
         <p className="signup-text">Already have an account? <Link to='/login'>Login here</Link></p>
       </form>

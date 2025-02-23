@@ -1,12 +1,11 @@
-import Navbar from '../components/Navbar'
-import './Home.css'
-import EventCard from '../components/EventCard'
-import { Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import Event from '../models/Event'
+import { useEffect, useState } from "react";
 import api from "../api"
+import Event from "../models/Event";
+import Navbar from "../components/Navbar";
+import { Link } from "react-router-dom";
+import EventCard from "../components/EventCard";
 
-function Home() {
+function MyEvents() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
@@ -14,8 +13,7 @@ function Home() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await api.get("/api/events/public/")
-        console.log(response)
+        const response = await api.get("/api/events/")
         setEvents(response.data)
       } catch (err) {
         console.error("Error fetching events:", err);
@@ -35,10 +33,10 @@ function Home() {
     <>
       <Navbar />
 
-      <div className="home-container">
-        <div className="event-list">
+      <div className="my-events-container">
+        <div className="my-event-list">
           {events.map((event, idx) => (
-            <Link to={`event/${event.id}`} 
+            <Link to={`/event/${event.id}`} 
                   key={event.title + idx}
             >
               <EventCard event={event}/>
@@ -47,7 +45,7 @@ function Home() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Home
+export default MyEvents;

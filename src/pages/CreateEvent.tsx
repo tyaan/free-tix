@@ -1,6 +1,8 @@
 import Navbar from '../components/Navbar'
 import './CreateEvent.css'
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom"
+import api from "../api"
 
 function CreateEvent() {
   const [title, setTitle] = useState('')
@@ -11,20 +13,33 @@ function CreateEvent() {
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    // setLoading(true);
     e.preventDefault()
+    const formattedStartTime = new Date(startTime).toISOString().split('.')[0] + 'Z';
+    const formattedEndTime = new Date(endTime).toISOString().split('.')[0] + 'Z';
     const newEvent = {
       title,
       overview,
       description,
       imgURL,
       location,
-      startTime: new Date(startTime),
-      endTime: new Date(endTime),
-      ticketID: []
+      startTime: formattedStartTime,
+      endTime: formattedEndTime,
     }
-    console.log(newEvent)
-    // ADD LOGIC TO STORE NEW EVENT
+    try {
+      const res = await api.post('/api/events/', {...newEvent});
+      console.log('Event created:', res.data);
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+      } else {
+        console.error("Request failed:", error);
+      }
+      alert(error);
+    }
   }
 
   return (
