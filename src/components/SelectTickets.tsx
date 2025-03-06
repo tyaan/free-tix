@@ -1,9 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Ticket from '../models/Ticket'
 import './SelectTickets.css'
+import api from "../api"
 
 function SelectTickets({ eventId }: { eventId: number }) {
-  // const tickets: Ticket[] = dummyTickets.filter((ticket) => ticket.eventId === eventId)
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await api.get(`/api/tickets/${eventId}/`)
+        console.log(response)
+        setTickets(response.data)
+      } catch (err) {
+        console.error("Error fetching tickets:", err);
+        setError("Failed to load tickets. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, [eventId]);
+
   const [selectedTickets, setSelectedTickets] = useState<{ [key: number]: number }>({})
 
   const handleChange = (ticketId: number, quantity: number) => {
@@ -18,6 +39,9 @@ function SelectTickets({ eventId }: { eventId: number }) {
     console.log('Selected Tickets:', selectedTickets)
     // Add logic to handle ticket purchase
   }
+
+  if (loading) return <p>Loading tickets...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <>

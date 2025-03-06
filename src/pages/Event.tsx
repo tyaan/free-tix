@@ -4,7 +4,7 @@ import './Event.css'
 import SelectTickets from '../components/SelectTickets'
 import Navbar from '../components/Navbar'
 import { useEffect, useState } from 'react'
-import api from "../api"
+import api from '../api'
 
 function EventPage() {
   const { id } = useParams()
@@ -53,9 +53,9 @@ function EventPage() {
             <p className="event-time">End Time: {event.endTime.toString()}</p>
           </div>
 
-          {/* <div className='select-tickets-container'>
+          {<div className='select-tickets-container'>
             <SelectTickets eventId={event.id} />
-          </div> */}
+          </div>}
           
         </div>
       </div>

@@ -3,6 +3,7 @@ import './CreateEvent.css'
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import api from "../api"
+import { TicketDetails } from '../models/Ticket'
 
 function CreateEvent() {
   const [title, setTitle] = useState('')
@@ -13,6 +14,8 @@ function CreateEvent() {
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
 
+  const [tickets, setTickets] = useState<TicketDetails[]>([{price: 0, details: ''}])
+
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -20,7 +23,7 @@ function CreateEvent() {
     e.preventDefault()
     const formattedStartTime = new Date(startTime).toISOString().split('.')[0] + 'Z';
     const formattedEndTime = new Date(endTime).toISOString().split('.')[0] + 'Z';
-    const newEvent = {
+    const event = {
       title,
       overview,
       description,
@@ -30,7 +33,7 @@ function CreateEvent() {
       endTime: formattedEndTime,
     }
     try {
-      const res = await api.post('/api/events/', {...newEvent});
+      const res = await api.post('/api/events/create', {event, tickets});
       console.log('Event created:', res.data);
     } catch (error) {
       if (error.response) {
@@ -40,6 +43,7 @@ function CreateEvent() {
       }
       alert(error);
     }
+    navigate('/my-events');
   }
 
   return (
@@ -96,6 +100,52 @@ function CreateEvent() {
             onChange={(e) => setEndTime(e.target.value)}
             required
           />
+          <h3>Tickets</h3>
+          <button type="button" onClick={() => {
+            setTickets((prev) => [...prev, {price: 0, details: ''}])
+          }}>
+            Add Ticket
+          </button>
+          {Array.from({ length: tickets.length }, (_, i) => (
+            <div key={i}>
+              <input
+                type="number"
+                step="any"
+                placeholder={`Ticket ${i + 1} price`}
+                value={tickets[i].price || ''}  
+                onChange={(e) => {
+                  const newPrice = parseFloat(e.target.value);
+                  setTickets((prevTickets) => {
+                    const updatedTickets = [...prevTickets];
+                    updatedTickets[i].price = newPrice;
+                    return updatedTickets;
+                  });
+                }}
+                required
+              />
+              <input
+                type="text"
+                placeholder={`Ticket ${i + 1} details`}
+                value={tickets[i].details || ''}
+                onChange={(e) => {
+                  const newDetails = e.target.value;
+                  setTickets((prevTickets) => {
+                    const updatedTickets = [...prevTickets];
+                    updatedTickets[i].details = newDetails;
+                    return updatedTickets;
+                  });
+                }}
+                required
+              />
+            </div>
+          ))}
+
+          <button type="button" onClick={() => {
+            setTickets((prev) => prev.length > 1 ? prev.slice(0, -1): prev)
+          }}>
+            Remove Ticket
+          </button>
+
           <button type="submit">Create Event</button>
         </form>
       </div>

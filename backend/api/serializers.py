@@ -31,4 +31,4 @@ class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
         fields = "__all__"
-        extra_kwargs = {"event": {"read_only": True}}
+        extra_kwargs = {"event": {"required": False, "read_only": True}}
